@@ -58,7 +58,7 @@ generateResponsePatterns <- function(itemBank,numQuestions,numExaminees){
       #generate a probability for responding, dependent on theta and difficulty
       difficulty <- mean(test[question,][grep("b",colnames(test))][!is.na(test[question,][grep("b",colnames(test))])],na.rm=T)
       
-      samplingProb <- ((1/options)*candDistributionFunction)/pnorm(difficulty)
+      samplingProb <- abs(((1/options)*candDistributionFunction)/pnorm(difficulty))
       print(samplingProb)
       
       #increase prob of correct response (50 perc. chance of correct guess)

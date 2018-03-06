@@ -74,7 +74,8 @@ generateItembank <- function(nItems, maxScore, model){
     
     #go through each b column (starting with the last) and assign NAs
     #identify b columns
-    bColumns <- sort(grep("b",colnames(itemBank)[colnames(itemBank)!="b1"]),decreasing=T)
+    bColumns <- sort(grep("b",colnames(itemBank)),decreasing=T)
+    bColumns <- bColumns[bColumns!=min(bColumns)]
     
     for (column in bColumns){
       
@@ -85,7 +86,7 @@ generateItembank <- function(nItems, maxScore, model){
       itemBank[,column] <- newB
       
       #update item bank
-      itemBank[is.na(itemBank[,column]), !colnames(itemBank) %in% c("b1","g","a1")] <- NA
+      itemBank[is.na(itemBank[,column]), !colnames(itemBank) %in% c(paste("b",as.numeric(gsub("[^\\d]+","", colnames(itemBank)[column], perl=TRUE))-1,sep=""),"b1","g","a1")] <- NA
       
     }
   }
